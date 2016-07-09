@@ -5,7 +5,7 @@ This repository contains code that was used in the thesis "Human mobility Patter
 ![Alt text](/figures/pipeline.png?raw=true "Optional Title")
 
 The figure above shows how the data pipeline that has been built to infer social ties.
-Basic flow of pipeline:
+Basic flow of pipeline:  
 1. PostgreSQL database schema is built using bash scripts (see `pipeline/build-schema`)  
 2. Data set is ingested into schema using `pg_dump`.  
 3. Database schemas are setup using bash scripts (see `pipeline/build-indexes`)  
