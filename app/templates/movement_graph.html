@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movement Graph</title>
+    <style>
+    #map { width: 100%; height: 500px; }
+</style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js" type="application/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js" type="application/javascript"></script>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js" type="application/javascript"></script>
+
+    <script src="https://rawgit.com/bbecquet/Leaflet.PolylineDecorator/master/leaflet.polylineDecorator.js"></script>
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<div class="col-md-4 col-md-offset-0">
+				<select name="user-dropdown" id="user-dropdown" multiple="multiple">
+                    {% for row in users %}
+				        <option value="{{row}}">{{row}}</option>
+				    {% endfor %}
+				</select>
+				<button href="#" id="submit-btn" class="btn btn-primary" type="submit" role="button">Button</button>
+
+		</div>
+	</div>
+</div>
+<div id="map" style="width:100%; height:800px;"></div>
+
+
+
+<script>
+$( document ).ready(function() {
+
+    var user_id = '{{user_id}}';
+    var map = L.map('map').setView([55.618534, 12.080729], 15);
+
+
+    function plotGraph(user_id) {
+        d3.json("/api/movement-graph/" + user_id, function (testData) {
+            console.log(testData);
+            map.eachLayer(function (layer) {
+                map.removeLayer(layer);
+            });
+            var basemapLayer = new L.TileLayer('http://{s}.tiles.mapbox.com/v3/github.map-xgq2svrz/{z}/{x}/{y}.png');
+            map.addLayer(basemapLayer);
+            var arrowHeadHtml =
+                    '<svg width="9" height="15" xmlns="http://www.w3.org/2000/svg">' +
+                    '<path stroke="red" fill="red" opacity="0.5" d="M 0 14 L 5 0 L 9 14 L 5 10 Z"></path>' +
+                    '</svg>';
+
+
+
+
+            var drawArrow = function (start, end, useCustomIconAnchor, weight) {
+                //var weightNormalized = (weight - 0.2) / (6 - 0.2);
+                var weightNormalized = (6 - 0.2) / (testData['max_edge'] - testData['min_edge']) * (weight - testData['max_edge']) + 6;
+
+                var line = new L.Polyline([start, end], {color: '#000000', weight: weightNormalized, opacity: 1});
+                map.addLayer(line);
+
+                var arrowHead = L.polylineDecorator(line);
+                map.addLayer(arrowHead);
+
+                arrowHead.setPatterns([{
+                    offset: '50%',
+                    repeat: 0,
+                    symbol: L.Symbol.marker({
+                        rotate: true,
+                        markerOptions: {
+                            icon: L.divIcon({
+                                className: '',
+                                html: arrowHeadHtml,
+                                iconSize: [3, 7],
+                                iconAnchor: useCustomIconAnchor ? [5, 0] : undefined,
+                            }),
+                        },
+                    }),
+                }]);
+            };
+            /*
+        var testData = {
+        edges: [
+        {start_lat:55.61387352200005, start_lon: 12.058865842000037,
+        stop_lat: 55.62387352200005, stop_lon: 12.068865842000037, value: 30}
+        ],
+        nodes: [
+        {name: 212312, value: 100, lat:55.61387352200005, lon: 12.058865842000037},
+        {name: 212312, value: 100, lat:55.62387352200005, lon: 12.068865842000037}
+        ]
+        };
+        */
+
+        for(
+                var i = 0 ; i
+        <testData.nodes.length ; i++) {
+            var weightNormalized = (40
+                    -3)/(testData ['max_node']-testData['min_node'])*(testData.nodes [i].value-testData['max_node'])+40;
+            L.circle([testData.nodes[i].lat
+
+                        , testData.nodes[i].lon], weightNormalized, {
+              color: 'red',
+              fillColor: '#f03'
+                        ,
+                        fillOpacity: 0.5
+            })
+                    .addTo(map
+                    )
+            ;
+        }
+        for(var i = 0 ; i < testData.edges.length ; i++) {
+                var start = L.latLng(testData.edges[i].start_lat, testData.edges[i].start_lon);
+            var end = L.latLng(testData.edges[i].stop_lat, testData.edges[i].stop_lon);
+            drawArrow(start, end
+                    ,
+
+                    true, testData.edges[i].value);
+        }
+            //var start = L.latLng(55.61387352200005, 12.058865842000037);
+            //var end = L.latLng(55.62387352200005, 12.068865842000037);
+            //drawArrow(start, end, true, 100);
+        });
+        }
+    console.log(typeof user_id);
+    if(user_id!=='') {
+        plotGraph(user_id);
+    }
+
+    jQuery('#submit-btn').click( function() {
+        plotGraph($('#user-dropdown :selected').text());
+    });
+
+
+});
+
+</script>
+</body>
+</html>

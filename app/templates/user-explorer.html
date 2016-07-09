@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="dtuApp">
+<head>
+    <meta charset="UTF-8">
+    <title>User Exporer</title>
+
+    <link href='https://api.mapbox.com/mapbox.js/v2.2.4/mapbox.css' rel='stylesheet' />
+    <link href='https://www.mapbox.com/base/latest/base.css' rel='stylesheet' />
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.min.css" rel="stylesheet">
+
+
+    <style>
+        #map {
+            height:100vh;
+            width:100%;
+        }
+    </style>
+    <style>
+        #mynetwork svg {
+            height:800px;
+            width:100%;
+        }
+    </style>
+</head>
+<body ng-controller="UserExplorerController">
+  <div class="row">
+      <div class="col-md-6">
+         <!-- <div id="map"></div>-->
+          <leaflet width="100%" height="100vh" geojson="geojson" center="san_fran" markers="markers" event-broadcast="events" defaults="defaults" id='map'></leaflet>
+
+      </div>
+      <div class="col-md-6">
+            <button ng-click="goBackward()">Backward</button>
+            <button ng-click="goForward()">Forward</button>
+            <vis-network data="data" options="options"></vis-network>
+            <p id="timestamp" ng-cloak>{{timestamp|angular}}</p>
+          <div id="mynetwork"></div>
+
+      </div>
+
+
+  </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.js" type="text/javascript"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js" type="text/javascript"></script>
+    <script src='https://api.mapbox.com/mapbox.js/v2.2.4/mapbox.js' type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-leaflet-directive/0.10.0/angular-leaflet-directive.js" type="text/javascript"></script>
+    <script src="../static/geojson/rf-areas.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.min.js"></script>
+    <script src="../static/js/angular-vis.js" type="text/javascript"></script>
+    <script src="../static/js/controllers.js" type="text/javascript"></script>
+    <script src="https://rawgit.com/anvaka/VivaGraphJS/master/dist/vivagraph.js"></script>
+<!--
+<script>
+    L.mapbox.accessToken = 'pk.eyJ1IjoiY2hyaWJzZW4iLCJhIjoiY2lrNDFqOTc5MDAwd3dja3N5eWx0d2w1diJ9.RjFugWHN9iE6opy8ol4piw';
+    var mapName = 'mapbox.dc-markers';
+    var map = L.mapbox.map('map', mapName)
+    .setView([55.610534,12.080729], 13);
+
+    someMarkers = [[55.61231577,12.09461950,38098],
+                [55.61787729,12.07498239,36141],
+                [55.62112600,12.07797518,36141],
+                [55.61601357,12.08673895,36141],
+                [55.62092045,12.06816732,36141],
+                [55.61435747,12.08513986,36141],
+                [55.62062257,12.07842489,36141],
+                [55.61469559,12.08600553,36141],
+                [55.62260288,12.07647649,38689],
+                [55.62160499,12.07734922,38689],
+                [55.62177109,12.07839957,39390],
+                [55.62380334,12.06330627,39390],
+                [55.62075763,12.07810998,38948],
+                [55.61966858,12.06690356,39005],
+                [55.61597713,12.06480406,39005],
+                [55.62000377,12.06794647,39005],
+                [55.62144100,12.07750132,11755],
+                [55.61908857,12.08896767,11755],
+                [55.61830626,12.08999592,11755],
+                [55.61930617,12.08727445,11755],
+                [55.62039747,12.06575743,14237],
+                [55.61921183,12.07858954,14237],
+                [55.62218392,12.06924187,14610],
+                [55.62059128,12.07785922,14610],
+                [55.61951642,12.08396243,14610],
+                [55.61182109,12.08721025,20983],
+                [55.61950079,12.07697355,20983],
+                [55.61800619,12.07467278,20983],
+                [55.61505710,12.08518186,20983],
+                [55.62052500,12.07789407,20983],
+                [55.61220248,12.08777273,22881],
+                [55.62295383,12.08437129,22881],
+                [55.61813914,12.07476722,22881],
+                [55.61381676,12.08172159,37768],
+                [55.62097042,12.08401961,22881],
+                [55.62317422,12.07262650,22881]];
+
+    for(var i = 0 ; i < someMarkers.length ; i++){
+        		L.circle([someMarkers[i][0],someMarkers[i][1]] , 10, {
+                color: 'red',
+                fillColor: '#f03',
+                fillOpacity: 0.5,
+                options: { user_id: someMarkers[i][2] }
+            }).addTo(map);
+        }
+
+    map.on('click', function(e) {
+        console.log(e);
+    });
+  </script>
+-->
+
+</body>
+</html>

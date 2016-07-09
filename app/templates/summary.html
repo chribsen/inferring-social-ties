@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>General Summary</title>
+
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.4/css/bootstrap-select.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.4/js/bootstrap-select.min.js"></script>
+
+    <!-- D3.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.14/d3.js"></script>
+    <!-- nvd3 -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.js"></script>
+
+    <script src='static/js/my-charts.js'></script>
+
+
+    <style>
+        .chart-wrapper {
+            height:500px
+        }
+
+        .parent {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            height:100%;
+        }
+
+        .child {
+            padding-top: 0%;
+            height: 100%;
+            width:100%;
+
+            right: 0;
+            position:absolute;
+        }
+
+        .chart-nvd3 {
+            height:100%;
+            width:100%;
+            background-color: white;
+        }
+
+        svg {
+            background-color: white!important;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="row">
+    <div class="col-md-4 col-md-offset-1">
+        <h3>General statistics</h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-10 col-md-offset-1 chart-wrapper">
+        <div class="panel panel-default parent">
+          <div class="panel-heading">Distribution of delta timestamp standard deviation</div>
+          <div class="panel-body">
+              <div class="chart-nvd3 child" id='delta-dist'>
+                    <svg style="height:90%;width:100%; background-color:white;"></svg>
+                </div>
+          </div>
+        </div>
+    </div>
+</div>
+<span style="margin: 50px;"></span>
+<div class="row">
+    <div class="col-md-10 col-md-offset-1 chart-wrapper">
+        <div class="panel panel-default parent">
+          <div class="panel-heading">Distribution of delta timestamp mean</div>
+          <div class="panel-body">
+              <div class="chart-nvd3 child" id='delta-mean'>
+                    <svg style="height:90%;width:100%; background-color:white;"></svg>
+                </div>
+          </div>
+        </div>
+    </div>
+</div>
+<span style="margin: 50px;"></span>
+<div class="row">
+    <div class="col-md-10 col-md-offset-1 chart-wrapper">
+        <div class="panel panel-default parent">
+          <div class="panel-heading">Distribution of datapoint count</div>
+          <div class="panel-body">
+              <div class="chart-nvd3 child" id='datapoint-count'>
+                    <svg style="height:90%;width:100%; background-color:white;"></svg>
+                </div>
+          </div>
+        </div>
+    </div>
+</div>
+<span style="margin: 50px;"></span>
+<div class="row">
+    <div class="col-md-10 col-md-offset-1 chart-wrapper">
+        <div class="panel panel-default parent">
+          <div class="panel-heading">Distribution of accuracies</div>
+          <div class="panel-body">
+              <div class="chart-nvd3 child" id='accuracies-dist'>
+                    <svg style="height:90%;width:100%; background-color:white;"></svg>
+                </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+
+    $( document ).ready(function() {
+        var timestamp_dist = MultiBarChart('#delta-dist svg', 'Standard deviations (all users)', 'Frequency');
+        timestamp_dist.plotFromUrl('/api/summary/timestamp/distribution');
+
+        var timestamp_mean = MultiBarChart('#delta-mean svg', 'Means (all users)', 'Frequency');
+        timestamp_mean.plotFromUrl('/api/summary/timestamp/mean');
+
+        var timestamp_mean = MultiBarChart('#datapoint-count svg', 'Count (all users)', 'Frequency');
+        timestamp_mean.plotFromUrl('/api/summary/count');
+
+
+    });
+
+
+</script>
+</body>
+</html>
