@@ -18,37 +18,27 @@ The figure above shows how the data pipeline that has been built to infer social
  
 Finally, we have throughout the process relied on smaller scripts to plot data and do smaller data tasks.
 
-Folder structure:
+**Folder structure:**
 
 ```
+.
 |-- app
 |   |-- static
 |   |-- templates
 |   |-- app.py
 |   `-- config.py
+|-- data
+|   |-- polygons
+|   `-- training-data
 |-- figures
 |-- misc-scripts
 |-- pipeline
 |   |-- build-indexes
-|   |   `-- setup-indexes.sql
 |   |-- build-schema
-|   |   `-- setup-db.sh
 |   |-- build-social-graph
-|   |   `-- build_social_graph.py
 |   |-- graph-statistics
-|   |   |-- build_graph_statistics.py
-|   |   |-- build_infomap_from_pajek_file.py
-|   |   |-- build_infomap_to_pajek_file.py
-|   |   `-- build_temporal_graph.py
 |   |-- sql-pipeline
-|   |   |-- compute-co-occurrences.sql
-|   |   |-- compute-consecutive-grids.sql
-|   |   |-- compute-diversity-in-co-occurrences.sql
-|   |   |-- compute-location-entropy.sql
-|   |   |-- compute-max-time-together.sql
-|   |   |-- compute-same-camp-score.sql
-|   |   `-- compute-same-genre-score.sql
 |   `-- train-models
-|       `-- build_dbscan_clusters.py
 |-- README.md
+
 ```
