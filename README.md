@@ -13,7 +13,7 @@ Basic flow of pipeline:
 5. Based on these features supervised learners are trained using Python and `sklearn` (see `pipeline/train-models`)
 6. Social graph is build using Python and `networkx` (see `pipeline/build-social-graph`)
 7. Community detection is applied using `infomap` (see `pipeline/graph-statistics`)
-7. Various graph statistics are applied using `networkx` (see `pipeline/graph-statistics`)
+8. Various graph statistics are applied using `networkx` (see `pipeline/graph-statistics`)
  
 Finally, we have throughout the process relied on smaller scripts to plot data and do smaller data tasks.
 
