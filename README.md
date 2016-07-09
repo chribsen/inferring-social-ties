@@ -21,9 +21,12 @@ Finally, we have throughout the process relied on smaller scripts to plot data a
 Folder structure:
 
 ```
-.
+|-- app
+|   |-- static
+|   |-- templates
+|   |-- app.py
+|   `-- config.py
 |-- figures
-|   `-- pipeline.png
 |-- misc-scripts
 |-- pipeline
 |   |-- build-indexes
@@ -47,5 +50,5 @@ Folder structure:
 |   |   `-- compute-same-genre-score.sql
 |   `-- train-models
 |       `-- build_dbscan_clusters.py
-`-- README.md
+|-- README.md
 ```
